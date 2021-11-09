@@ -56,7 +56,7 @@ async def on_raw_reaction_add(payload):
     votes = {"upvote": 0, "downvote": 0}
 
     for reaction in reaction_message.reactions:
-        reaction_name = reaction.name
+        reaction_name = reaction.emoji.name
         if reaction_name == "upvote" or reaction_name == "downvote":
             votes[reaction_name] = reaction.count
 
@@ -73,7 +73,7 @@ async def on_raw_reaction_remove(payload):
     votes = {"upvote": 0, "downvote": 0}
 
     for reaction in reaction_message.reactions:
-        reaction_name = reaction.name
+        reaction_name = reaction.emoji.name
         if reaction_name == "upvote" or reaction_name == "downvote":
             votes[reaction_name] = reaction.count
 
