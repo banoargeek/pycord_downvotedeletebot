@@ -63,7 +63,7 @@ async def on_raw_reaction_add(payload):
 
 @bot.event
 async def on_raw_reaction_remove(payload):
-    reaction_channel = bot.get_channel(paylod.channel_id)
+    reaction_channel = bot.get_channel(payload.channel_id)
     reaction_message = await reaction_channel.fetch_message(payload.message_id)
 
     if payload.channel_id != selected_channel_id:
