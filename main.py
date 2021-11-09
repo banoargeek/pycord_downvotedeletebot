@@ -17,7 +17,7 @@ load_dotenv()
 token = getenv("TOKEN")
 
 #Globals
-reaction_votes = {"<:upvote:708029780896907304>": 0, "<:downvote:708029810974130176>": 0}
+vote_emojis = ["<:upvote:708029780896907304>", "<:downvote:708029810974130176>"]
 
 selected_channel_id = 906024535923499058
 selected_vote_percentage = 60 #%
@@ -37,10 +37,8 @@ async def on_message(message):
         # Message was outside of target channel, ignored
         return
 
-    reaction_keys = list(reaction_votes.keys())
-
-    await message.add_reaction(reaction_keys[0])
-    await message.add_reaction(reaction_keys[1])
+    await message.add_reaction(vote_emojis[0])
+    await message.add_reaction(vote_emojis[1])
     
 @bot.event
 async def on_raw_reaction_add(payload):
@@ -57,8 +55,8 @@ async def on_raw_reaction_add(payload):
 
     for reaction in reaction_message.reactions:
         reaction_string = str(reaction)
-        if reaction_string == reaction_votes[0] or reaction_string == reaction_votes[1]:
-            reaction_votes[reaction_string] = (reaction.count) - 1
+        if reaction_string == vote_emojis[0] or reaction_string == vote_emojis[1]:
+            vote_emojis[reaction_string] = (reaction.count) - 1
 
 @bot.event
 async def on_raw_reaction_remove(payload):
@@ -71,7 +69,7 @@ async def on_raw_reaction_remove(payload):
 
     for reaction in reaction_message.reactions:
         reaction_string = str(reaction)
-        if reaction_string == reaction_votes[0] or reaction_string == reaction_votes[1]:
+        if reaction_string == vote_emojis[0] or reaction_string == vote_emojis[1]:
             votes[reaction_string] = (reaction.count) - 1
 
 #Token
