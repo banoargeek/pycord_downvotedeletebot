@@ -26,7 +26,6 @@ selected_vote_percentage = 60 #%
 bot = commands.Bot(command_prefix="ddb$")
 bot_id = 906035361032052756
 
-#runs when the bot has started
 @bot.event
 async def on_ready():
     print("Downvote Delete Bot started! (Logged in as {0.user}.)".format(bot))
