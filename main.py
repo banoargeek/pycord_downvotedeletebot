@@ -36,6 +36,11 @@ async def on_message(message):
     if message_channel != bot.get_channel(selected_channel_id):
         # Message was outside of target channel, ignored
         return
+
+    reaction_keys = list(reaction_votes.keys())
+
+    await message.add_reaction(reaction_keys[1])
+    await message.add_reaction(reaction_keys[2])
     
 @bot.event
 async def on_raw_reaction_add(payload):
