@@ -46,12 +46,13 @@ async def on_message(message):
 async def on_raw_reaction_add(payload):
     reaction_channel = bot.get_channel(payload.channel_id)
     reaction_message = await reaction_channel.fetch_message(payload.message_id)
-    if payload.user_id == bot_id:
-        # Reaction was done by the bot, ignored
-        return
     
     if payload.channel_id != selected_channel_id:
         # Reaction was outside of target channel, ignored
+        return
+
+    if payload.user_id == bot_id:
+        # Reaction was done by the bot, ignored
         return
 
     for reaction in reaction_message.reactions:
@@ -61,15 +62,14 @@ async def on_raw_reaction_add(payload):
 
 @bot.event
 async def on_raw_reaction_remove(payload):
-    #if payload.user_id == bot_id:
-    #    # Reaction was done by the bot, ignored
-    #    return
-    
+    reaction_channel = bot.get_channel(paylod.channel_id)
+    reaction_message = await reaction_channel.fetch_message(payload.message_id)
+
     if payload.channel_id != selected_channel_id:
         # Reaction was outside of target channel, ignored
         return
 
-    for reaction in message.reactions:
+    for reaction in reaction_message.reactions:
         reaction_string = str(reaction)
         if reaction_string == reaction_votes[0] or reaction_string == reaction_votes[1]:
             votes[reaction_string] = (reaction.count) - 1
