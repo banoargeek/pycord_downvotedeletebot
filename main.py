@@ -20,7 +20,7 @@ token = getenv("TOKEN")
 vote_emojis = {"upvote": "<:upvote:708029780896907304>", "downvote": "<:downvote:708029810974130176>"}
 
 selected_channel_id = 906024535923499058
-selected_vote_percentage = 60 #%
+selected_vote_percentage = 37 # Divide Upvotes by total amount of votes. (IE: 7 Upvotes and 12 Downvotes)
 
 #Bot
 bot = commands.Bot(command_prefix="ddb$")
@@ -59,7 +59,8 @@ async def on_raw_reaction_add(payload):
         reaction_name = reaction.emoji.name
         if reaction_name == "upvote" or reaction_name == "downvote":
             votes[reaction_name] = reaction.count
-
+    
+    print(f"upvotes: {votes['upvote']}, downvotes: {votes['downvote']}")
 
 @bot.event
 async def on_raw_reaction_remove(payload):
@@ -76,6 +77,8 @@ async def on_raw_reaction_remove(payload):
         reaction_name = reaction.emoji.name
         if reaction_name == "upvote" or reaction_name == "downvote":
             votes[reaction_name] = reaction.count
+
+    print(f"upvotes: {votes['upvote']}, downvotes: {votes['downvote']}")
 
 #Token
 bot.run(token)
