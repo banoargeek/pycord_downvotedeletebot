@@ -39,8 +39,8 @@ async def on_message(message):
 
     reaction_keys = list(reaction_votes.keys())
 
+    await message.add_reaction(reaction_keys[0])
     await message.add_reaction(reaction_keys[1])
-    await message.add_reaction(reaction_keys[2])
     
 @bot.event
 async def on_raw_reaction_add(payload):
