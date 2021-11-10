@@ -11,4 +11,4 @@ Todo:
 
 (Docs: https://docs.pycord.dev/en/latest/index.html)
 
-Contact: Major#3577 on Discord
+Contact: ***Major#3577*** on Discord
