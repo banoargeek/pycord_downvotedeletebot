@@ -6,9 +6,6 @@ import discord
 intents = discord.Intents.default()
 intents.reactions = True
 
-from discord.ext import commands
-from discord.ext.commands import bot
-
 from dotenv import load_dotenv
 from os import getenv
 
@@ -54,6 +51,12 @@ async def on_raw_reaction_add(payload):
     if payload.user_id == bot.user.id:
         # - Reaction was done by the bot, ignored
         return
+
+    if reaction_message.author.id == payload.user_id:
+        # - Reaction was done by the poster
+        if payload.emoji == vote_emojis["upvote"]:
+            # - Reaction was an upvote, removed
+            await reaction_message.remove_reaction(payload.emoji, payload.user_id)
 
     votes = {"upvote": 0, "downvote": 0}
 
