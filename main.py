@@ -3,6 +3,7 @@
 
 import datetime
 from datetime import date
+from datetime import datetime
 
 import discord
 
@@ -31,7 +32,7 @@ bot = discord.Client()
 @bot.event
 async def on_ready():
     print(f"Downvote Delete Bot started! (Logged in as {bot.user}.)")
-    bot.activity = f"Bot last started: {date.today()} @ {date.time()}"
+    bot.activity = f"Bot last started: {date.today()} @ {datetime.now()}"
 
 @bot.event
 async def on_message(message):
