@@ -32,7 +32,7 @@ bot = discord.Client()
 @bot.event
 async def on_ready():
     print(f"Downvote Delete Bot started! (Logged in as {bot.user}.)")
-    bot.activity = f"Bot last started: {date.today()} @ {datetime.now()}"
+    bot.change_presence(status=discord.status.online, activity=Activity(name= f"(Bot last started: {date.today()} @ {datetime.now()})"))
 
 @bot.event
 async def on_message(message):
