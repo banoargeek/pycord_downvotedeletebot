@@ -66,7 +66,7 @@ async def on_raw_reaction_add(payload):
     print(f"upvotes: {votes['upvote']}, downvotes: {votes['downvote']}")
 
     total_votes = votes["upvote"] + votes["downvote"]
-    vote_percentage = (votes["upvote"] / total_votes) * 100
+    vote_percentage = ((votes["upvote"] / total_votes) * 100).2f
     print(f"Vote percentage: {vote_percentage}%")
 
     if vote_percentage < selected_vote_percentage:
@@ -92,7 +92,7 @@ async def on_raw_reaction_remove(payload):
     print(f"upvotes: {votes['upvote']}, downvotes: {votes['downvote']}")
 
     total_votes = votes["upvote"] + votes["downvote"]
-    vote_percentage = (votes["upvote"] / total_votes) * 100
+    vote_percentage = ((votes["upvote"] / total_votes) * 100).2f
     print(f"Vote percentage: {vote_percentage}%")
 
     if vote_percentage < selected_vote_percentage:
