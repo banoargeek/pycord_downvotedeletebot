@@ -1,6 +1,9 @@
 #main.py
 #author: Major#3577
 
+import datetime
+from datetime import date
+
 import discord
 
 intents = discord.Intents.default()
@@ -28,6 +31,7 @@ bot = discord.Client()
 @bot.event
 async def on_ready():
     print(f"Downvote Delete Bot started! (Logged in as {bot.user}.)")
+    bot.activity = f"Bot last started: {date.today()} @ {date.time()}"
 
 @bot.event
 async def on_message(message):
