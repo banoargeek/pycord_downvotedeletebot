@@ -4,6 +4,8 @@ Bot written using Pycord (This description is a placeholder)
 * Bot takes a target channel and selected emojis (Currently hardcoded)
 * Bot will react automatically in said channel, and delete messages
 
+**-->Make sure that you include a .env with your token in the root directory (Or use config vars on your hosting platform)!!**
+
 Todo:
 * Slash commands to allow for customization without editing files
 
