@@ -20,21 +20,23 @@ token = getenv("TOKEN")
 vote_emojis = {"upvote": "<:upvote:708029780896907304>", "downvote": "<:downvote:708029810974130176>"}
 
 selected_channel_id = 906024535923499058
-selected_vote_percentage = 37 # Divide Upvotes by total amount of votes. (IE: 7 Upvotes and 12 Downvotes)
+# - (Upvotes / Total Votes) * 100 - If percentage is less than selected, the message is removed
+# - Note: in the future, the bot's vote may not found, but for now it does.
+selected_vote_percentage = 25
 
 #Bot
-bot = commands.Bot(command_prefix="ddb$")
-bot_id = 906035361032052756
+#bot = commands.Bot(command_prefix="ddb$")
+bot = discord.Client()
 
 @bot.event
 async def on_ready():
-    print("Downvote Delete Bot started! (Logged in as {0.user}.)".format(bot))
+    print(f"Downvote Delete Bot started! (Logged in as {bot.user}.)")
 
 @bot.event
 async def on_message(message):
     message_channel = message.channel
     if message_channel != bot.get_channel(selected_channel_id):
-        # Message was outside of target channel, ignored
+        # - Message was outside of target channel, ignored
         return
 
     await message.add_reaction(vote_emojis["upvote"])
@@ -46,11 +48,11 @@ async def on_raw_reaction_add(payload):
     reaction_message = await reaction_channel.fetch_message(payload.message_id)
     
     if payload.channel_id != selected_channel_id:
-        # Reaction was outside of target channel, ignored
+        # - Reaction was outside of target channel, ignored
         return
 
-    if payload.user_id == bot_id:
-        # Reaction was done by the bot, ignored
+    if payload.user_id == bot.user.id:
+        # - Reaction was done by the bot, ignored
         return
 
     votes = {"upvote": 0, "downvote": 0}
@@ -60,7 +62,15 @@ async def on_raw_reaction_add(payload):
         if reaction_name == "upvote" or reaction_name == "downvote":
             votes[reaction_name] = reaction.count
     
+    print("---- Bot reaction update ----")
     print(f"upvotes: {votes['upvote']}, downvotes: {votes['downvote']}")
+
+    total_votes = votes["upvote"] + votes["downvote"]
+    vote_percentage = (votes["upvote"] / total_votes) * 100
+    print(f"Vote percentage: {vote_percentage}%")
+
+    if vote_percentage < selected_vote_percentage:
+        await reaction_message.delete()
 
 @bot.event
 async def on_raw_reaction_remove(payload):
@@ -78,7 +88,15 @@ async def on_raw_reaction_remove(payload):
         if reaction_name == "upvote" or reaction_name == "downvote":
             votes[reaction_name] = reaction.count
 
+    print("---- Bot reaction update ----")
     print(f"upvotes: {votes['upvote']}, downvotes: {votes['downvote']}")
+
+    total_votes = votes["upvote"] + votes["downvote"]
+    vote_percentage = (votes["upvote"] / total_votes) * 100
+    print(f"Vote percentage: {vote_percentage}%")
+
+    if vote_percentage < selected_vote_percentage:
+        await reaction_message.delete()
 
 #Token
 bot.run(token)
