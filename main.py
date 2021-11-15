@@ -1,7 +1,7 @@
 #main.py
 #author: Major#3577
 
-#Hi!
+#Hello!
 
 import datetime
 from datetime import date
